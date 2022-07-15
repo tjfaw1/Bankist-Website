@@ -62,3 +62,51 @@ document.querySelector('.nav__links').addEventListener('click', function(e) {
       behavior: 'smooth' });
   }
 });
+
+// Tabbed Component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+// Attaching event listener on the common parent
+tabsContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  // Guard Clause
+  if(!clicked) return;
+  // Remove Active Classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+  // Activate Tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate Content Area
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+
+});
+
+// Menu Fade Animation
+const nav = document.querySelector('.nav');
+
+nav.addEventListener('mouseover', function(e) {
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = 0.5;
+    });
+    logo.style.opacity = 0.5;
+  }
+})
+
+// Sticky Navigation
+
+const initialCoords = section1.getBoundingClientRect();
+
+// Scroll event at specific location on the page isn't very efficient as scroll is always calculating and can clog performance (especially on older mobile).
+// Look at Intersection Observer API
+window.addEventListener('scroll', function (e) {
+  if(window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+})
