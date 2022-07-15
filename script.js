@@ -110,3 +110,19 @@ window.addEventListener('scroll', function (e) {
   if(window.scrollY > initialCoords.top) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
 })
+
+// Slider
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('slider__btn--left');
+const btnRight = document.querySelector('slider__btn--right');
+
+let currentSlide = 0;
+
+slider.style.overflow = 'visible';
+
+slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`));
+
+btnRight.addEventListener('click', function() {
+  currentSlide++;
+  slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i - currentSlide}%)`));
+})
